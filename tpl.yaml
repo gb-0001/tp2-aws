@@ -5,6 +5,10 @@ Parameters:
     Default: tp1GB
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
     Type: 'AWS::EC2::KeyPair::KeyName'
+  S3ParamBucket:
+    Type: String
+    Default: learn-cloudformation-gbtp2
+    Description: Bucket Name
   DBName:
     Default: MyDatabase
     Description: MySQL database name
@@ -453,11 +457,12 @@ Resources:
       SubnetId: !Ref PublicSubnetA
       RouteTableId: !Ref PublicRouteTable
 #Activer l'auto-assignation des IP sur le sous-reseau public pour que l'on puisse acceder à l'instance par la suite
-
+#Creation du bucket S3
   S3Bucket:
-    Type: AWS::S3::Bucket
+    Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: learn-cloudformation-gbtp2
+      BucketName: !Ref S3ParamBucket
+
   WebServerInstance:
     Type: 'AWS::EC2::Instance'
     Metadata:
